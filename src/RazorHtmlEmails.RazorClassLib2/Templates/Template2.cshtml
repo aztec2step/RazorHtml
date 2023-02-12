@@ -1,0 +1,33 @@
+﻿@model RazorHtmlEmails.RazorClassLib2.Templates.Template2Model
+@using System.Linq
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Template 2</title>
+</head>
+<body>
+    <p>
+        <menu>
+        @foreach (var x in Model.MenuItems)
+        {
+            <li>@x</li>
+        }
+        </menu>
+    </p>
+    <ul>
+        @foreach (var x in Model.Items)
+        {
+            <li>@x</li>
+        }
+    </ul>
+</body>
+</html>
