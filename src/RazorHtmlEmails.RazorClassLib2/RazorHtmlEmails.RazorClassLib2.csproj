@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Templates\Template2.cshtml" />
     <Content Remove="Views\Template1.cshtml" />
   </ItemGroup>
 
@@ -18,6 +19,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Templates\Expected.html" />
+    <EmbeddedResource Include="Templates\Template2.cshtml" />
     <EmbeddedResource Include="Views\Expected.html" />
     <EmbeddedResource Include="Views\Template1.cshtml" />
   </ItemGroup>

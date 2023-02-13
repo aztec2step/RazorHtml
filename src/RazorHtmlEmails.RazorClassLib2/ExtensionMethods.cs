@@ -25,12 +25,14 @@ namespace RazorHtmlEmails.RazorClassLib2
             //services.AddSingleton(diagnosticListener);
             //services.AddSingleton<DiagnosticSource>(diagnosticListener);
 
+            var fp1 = new EmbeddedFileProvider(typeof(Templates.Template2Model).Assembly, "RazorHtmlEmails.RazorClassLib2");
+
             // Here we need to register assembly to make razor find compiled views            
             services.AddRazorPages()
                 //.AddApplicationPart(Assembly.GetExecutingAssembly())
                 .AddApplicationPart(typeof(Templates.Template2Model).Assembly)
                 .AddApplicationPart(typeof(ConfirmAccountEmailViewModel).Assembly)
-                .AddRazorRuntimeCompilation();
+                .AddRazorRuntimeCompilation( o => o.FileProviders.Add(fp1));
             services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
             // Now we need to add IWebHostEnvironment with custom implementation as default one is internal.
