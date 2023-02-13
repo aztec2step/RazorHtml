@@ -21,7 +21,7 @@ namespace RazorHtmlEmails.Tests
 
             var builder = WebApplication.CreateBuilder();
             builder.Configuration.AddJsonFile("appsettings.json", optional: true);
-            builder.Environment.IncludeRazorTemplates();
+            //builder.Environment.IncludeRazorTemplates();
             builder.Services.UseRazorViewRendererInConsole();
             var app = builder.Build();
             renderer = app.Services.GetRequiredService<IRazorViewToStringRenderer>();
@@ -49,8 +49,8 @@ namespace RazorHtmlEmails.Tests
             model1.Items.Add("Beta");
             model1.Items.Add("Production");
 
-            //string body = await renderer.RenderViewToStringAsync("Template1", model1);
-            string body = await renderer.RenderViewToStringAsync("/Views/Template1.cshtml", model1);
+            string body = await renderer.RenderViewToStringAsync("Template1", model1);
+            //string body = await renderer.RenderViewToStringAsync("/Views/Template1.cshtml", model1);
             Assert.Equal(expected1, body);
 
             var model2 = new Template2Model();
@@ -61,8 +61,8 @@ namespace RazorHtmlEmails.Tests
             model2.Items.Add("Beta");
             model2.Items.Add("Production");
 
-            //body = await renderer.RenderViewToStringAsync("Template2", model2);
-            body = await renderer.RenderViewToStringAsync("/Templates/Template2.cshtml", model2);
+            body = await renderer.RenderViewToStringAsync("Template2", model2); //NOTE: in this case, we likely need a ViewLocationExpander instance to add "/Templates/{0}.cshtml"
+            //body = await renderer.RenderViewToStringAsync("/Templates/Template2.cshtml", model2);
             Assert.Equal(expected2, body);
 
         }
