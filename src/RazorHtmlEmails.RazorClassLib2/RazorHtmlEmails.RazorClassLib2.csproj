@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Template1.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Templates\Expected.html" />
     <None Remove="Views\Expected.html" />
   </ItemGroup>
@@ -15,6 +19,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Templates\Expected.html" />
     <EmbeddedResource Include="Views\Expected.html" />
+    <EmbeddedResource Include="Views\Template1.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +31,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.13" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RazorHtmlEmails.RazorClassLib\RazorHtmlEmails.RazorClassLib.csproj" />
   </ItemGroup>
 
 

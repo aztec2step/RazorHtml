@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RazorHtmlEmails.RazorClassLib;
 using RazorHtmlEmails.RazorClassLib.Services;
+using RazorHtmlEmails.RazorClassLib.Views.Emails.ConfirmAccount;
 using RazorHtmlEmails.RazorClassLib2;
 using RazorHtmlEmails.RazorClassLib2.Templates;
 using RazorHtmlEmails.RazorClassLib2.Views;
@@ -18,10 +19,13 @@ namespace RazorHtmlEmails.Tests
         {
             //Setup (as required)
 
-            var services = new ServiceCollection();
-            services.UseRazorViewRendererInConsole();
+            var builder = WebApplication.CreateBuilder();
+            builder.Configuration.AddJsonFile("appsettings.json", optional: true);
+            builder.Environment.IncludeRazorTemplates();
+            builder.Services.UseRazorViewRendererInConsole();
+            var app = builder.Build();
+            renderer = app.Services.GetRequiredService<IRazorViewToStringRenderer>();
 
-            renderer = null; // new RazorViewToStringRenderer();
 
             var assembly = typeof(Template1Model).GetTypeInfo().Assembly;
 
@@ -31,10 +35,7 @@ namespace RazorHtmlEmails.Tests
 
             using var stream2 = assembly!.GetManifestResourceStream("RazorHtmlEmails.RazorClassLib2.Templates.Expected.html");
             using var reader2 = new StreamReader(stream2);
-            expected2 = reader.ReadToEnd();
-
-
-
+            expected2 = reader2.ReadToEnd();
         }
 
         [Fact]
@@ -64,6 +65,18 @@ namespace RazorHtmlEmails.Tests
             body = await renderer.RenderViewToStringAsync("/Templates/Template2.cshtml", model2);
             Assert.Equal(expected2, body);
 
+        }
+
+        [Fact]
+        public async void Test2()
+        {
+
+
+            var model = new ConfirmAccountEmailViewModel($"https://localhost/{Guid.NewGuid()}");
+
+            string body = await renderer.RenderViewToStringAsync("/Views/Emails/ConfirmAccount/ConfirmAccountEmail.cshtml", model);
+
+            Assert.False(string.IsNullOrWhiteSpace(body));
         }
     }
 }
